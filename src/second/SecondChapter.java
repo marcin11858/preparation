@@ -11,7 +11,9 @@ public class SecondChapter {
 //        question_2_3();
 //        question_2_4();
         question_2_5();
+        question_2_5_1();
     }
+
 
 
     private static void question_2_1() {
@@ -151,5 +153,7 @@ public class SecondChapter {
         LinkedListNode.printList(head);
     }
 
+    private static void question_2_5_1() {
+    }
 
 }
