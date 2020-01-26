@@ -1,6 +1,8 @@
 package second;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Stack;
 
 public class SecondChapter {
 
@@ -10,11 +12,15 @@ public class SecondChapter {
 //        question_2_2();
 //        question_2_3();
 //        question_2_4();
-        question_2_5();
-        question_2_5_1();
+//        question_2_5();
+//        question_2_5_1();
+//        question_2_6();
+//        question_2_6_1();
+//        question_2_6_2();
+//        question_2_7();
+        question_2_8();
+
     }
-
-
 
     private static void question_2_1() {
         LinkedListNode n = LinkedListNode.buildList(new int[]{1, 1, 1});
@@ -154,6 +160,240 @@ public class SecondChapter {
     }
 
     private static void question_2_5_1() {
+        LinkedListNode first = LinkedListNode.buildList(new int[]{1, 2, 3, 4});
+        LinkedListNode second = LinkedListNode.buildList(new int[]{5, 6, 7});
+
+        int len1 = LinkedListNode.length(first);
+        int len2 = LinkedListNode.length(second);
+
+        if (len1 < len2) {
+            first = LinkedListNode.padList(first, len2 - len1);
+        } else {
+            second = LinkedListNode.padList(second, len1 - len2);
+        }
+
+        PartialSum sum = addListsHelper(first, second);
+        if (sum.carry == 0) {
+            LinkedListNode.printList(sum.sum);
+        } else {
+            LinkedListNode result = LinkedListNode.insertBefore(sum.sum, sum.carry);
+            LinkedListNode.printList(result);
+        }
     }
 
+    private static PartialSum addListsHelper(LinkedListNode l1, LinkedListNode l2) {
+        if (l1 == null && l2 == null) {
+            PartialSum sum = new PartialSum();
+            return sum;
+        }
+
+        PartialSum sum = addListsHelper(l1.next, l2.next);
+        int val = sum.carry + l1.data + l2.data;
+
+        LinkedListNode fullResult = LinkedListNode.insertBefore(sum.sum, val % 10);
+
+        sum.sum = fullResult;
+        sum.carry = val/10;
+        return sum;
+    }
+
+
+    static class PartialSum {
+        public LinkedListNode sum = null;
+        public int carry = 0;
+    }
+
+
+    private static void question_2_6() {
+        LinkedListNode list = LinkedListNode.buildList(new int[]{1, 2, 3, 4, 4, 2, 1});
+        LinkedListNode clone = reverseAndClone(list);
+        System.out.println(equals(list, clone));
+    }
+
+    private static LinkedListNode reverseAndClone(LinkedListNode node) {
+        LinkedListNode head = null;
+        while (node != null) {
+            LinkedListNode n = new LinkedListNode(node.data);
+            n.next = head;
+            head = n;
+            node = node.next;
+        }
+        return head;
+    }
+
+    private static boolean equals(LinkedListNode first, LinkedListNode second) {
+        while (first != null && second != null) {
+            if (first.data != second.data) {
+                return false;
+            }
+            first = first.next;
+            second = second.next;
+        }
+
+        return first == null && second == null;
+    }
+
+    private static void question_2_6_1() {
+
+        LinkedListNode list = LinkedListNode.buildList(new int[]{1, 2, 3, 4, 4, 2, 1});
+
+        LinkedListNode fast = list;
+        LinkedListNode slow = list;
+
+        Stack<Integer> stack = new Stack<>();
+
+        while (fast != null && fast.next != null) {
+            stack.push(slow.data);
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        if (fast != null) {
+            slow = slow.next;
+        }
+
+        while (slow != null) {
+            int top = stack.pop();
+
+            if (top != slow.data) {
+                System.out.println("false");
+                return;
+            }
+            slow = slow.next;
+        }
+        System.out.println("true");
+    }
+
+    private static void question_2_6_2() {
+        LinkedListNode list = LinkedListNode.buildList(new int[]{1, 2, 3, 4, 4, 3, 2, 1});
+        int length = LinkedListNode.length(list);
+        Result res = isPalindromeRecurse(list, length);
+        System.out.println(res.result);
+    }
+
+    private static Result isPalindromeRecurse(LinkedListNode head, int length) {
+        if (head == null || length <= 0 ) {
+            return new Result(head, true);
+        } else if (length == 1) {
+            return new Result(head.next, true);
+        }
+
+        Result res = isPalindromeRecurse(head.next, length - 2);
+        if (!res.result || res.node == null) {
+            return res;
+        }
+
+        res.result = (head.data == res.node.data);
+
+        res.node = res.node.next;
+
+        return res;
+    }
+
+    private static class Result {
+        public Result(LinkedListNode node, boolean result) {
+            this.node = node;
+            this.result = result;
+        }
+
+        public LinkedListNode node;
+        public boolean result;
+    }
+
+    private static class ResultIntersect {
+        public LinkedListNode tail;
+        public int size;
+
+        public ResultIntersect(LinkedListNode tail, int size) {
+            this.tail = tail;
+            this.size = size;
+        }
+    }
+
+    private static void question_2_7() {
+        LinkedListNode intersect = LinkedListNode.buildList(new int[]{ 3, 2, 1});
+        LinkedListNode list1 = LinkedListNode.buildList(new int[]{1, 2, 3, 4, 4, 3, 2, 1});
+        LinkedListNode.getLast(list1).next = intersect;
+        LinkedListNode list2 = LinkedListNode.buildList(new int[]{1, 2, 3, 4, 4, 3, 2, 1});
+        LinkedListNode.getLast(list2).next = intersect;
+
+        if (list1 == null || list2 == null) {
+            System.out.println("false");
+            return;
+        }
+
+        ResultIntersect result1 = getTailAndSize(list1);
+        ResultIntersect result2 = getTailAndSize(list2);
+
+        if (result1.tail != result2.tail) {
+            System.out.println("false");
+            return;
+        }
+
+        LinkedListNode shorter = result1.size < result2.size ? list1 : list2;
+        LinkedListNode longer = result1.size < result2.size ? list2 : list1;
+
+        longer = getKthNode(longer, Math.abs(result1.size - result2.size));
+
+        while (shorter != longer) {
+            shorter = shorter.next;
+            longer = longer.next;
+        }
+
+        LinkedListNode.printList(longer);
+    }
+
+    private static LinkedListNode getKthNode(LinkedListNode head, int k) {
+        LinkedListNode current = head;
+        while (k > 0 && current != null) {
+            current = current.next;
+            --k;
+        }
+        return current;
+    }
+
+    private static ResultIntersect getTailAndSize(LinkedListNode list) {
+        if (list == null) return null;
+
+        int size = 1;
+        LinkedListNode current = list;
+        while (current.next != null) {
+            size++;
+            current = current.next;
+        }
+        return new ResultIntersect(current, size);
+    }
+
+    private static void question_2_8() {
+        LinkedListNode start = new LinkedListNode(16);
+        LinkedListNode list = LinkedListNode.buildList(new int[]{1, 4, 5, 6, 7, 8, 9 ,2, 3});
+        LinkedListNode.getLast(list).next = start;
+        LinkedListNode loop = LinkedListNode.buildList(new int[]{4, 5, 6});
+        start.next = loop;
+        LinkedListNode.getLast(loop).next = start;
+
+        LinkedListNode slow = list;
+        LinkedListNode fast = list;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast) {
+                break;
+            }
+        }
+
+        if (fast == null || slow == null) {
+            System.out.println("No loop");
+            return;
+        }
+
+        slow = list;
+        while (slow != fast) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+
+        System.out.println(slow.data);
+    }
 }

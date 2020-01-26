@@ -34,6 +34,39 @@ public class LinkedListNode {
         System.out.println("NULL");
     }
 
+    public static int length(LinkedListNode n) {
+        int i = 0;
+        while (n != null) {
+            ++i;
+            n = n.next;
+        }
+        return i;
+    }
+
+    public static LinkedListNode padList(LinkedListNode n, int number) {
+        for (int i = 0; i < number; ++i) {
+            LinkedListNode zeroNode = new LinkedListNode(0);
+            zeroNode.next = n;
+            n = zeroNode;
+        }
+        return n;
+    }
+
+    public static LinkedListNode insertBefore(LinkedListNode list, int data) {
+        LinkedListNode node = new LinkedListNode(data);
+        if (list != null) {
+            node.next = list;
+        }
+        return node;
+    }
+
+    public static LinkedListNode getLast(LinkedListNode list) {
+        while (list.next != null) {
+            list = list.next;
+        }
+        return list;
+    }
+
     public String toString() {
         return String.valueOf(data);
     }
