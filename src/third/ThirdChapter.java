@@ -6,7 +6,8 @@ public class ThirdChapter {
 //        question_3_1();
 //        question_3_2();
 //        question_3_2_1();
-        question_3_3();
+//        question_3_3();
+        question_3_4();
     }
 
     private static void question_3_1() {
@@ -82,5 +83,15 @@ public class ThirdChapter {
         System.out.println(setOfStackStack);
     }
 
+    private static void question_3_4() {
+        StackQueue stackQueue = new StackQueue();
+        stackQueue.add(1);
+        stackQueue.add(2);
+        stackQueue.add(3);
+        stackQueue.add(4);
+        System.out.println(stackQueue.peek());
+        stackQueue.add(5);
+        System.out.println(stackQueue.peek());
+    }
 
 }
