@@ -5,7 +5,8 @@ public class ThirdChapter {
     public static void main(String[] args) {
 //        question_3_1();
 //        question_3_2();
-        question_3_2_1();
+//        question_3_2_1();
+        question_3_3();
     }
 
     private static void question_3_1() {
@@ -54,6 +55,31 @@ public class ThirdChapter {
         stack.pop();
 
         System.out.println(stack.min());
+    }
+
+    private static void question_3_3() {
+        SetOfStackWithoutShifting setOfStackStack = new SetOfStackWithoutShifting();
+        setOfStackStack.push(1);
+        setOfStackStack.push(2);
+        setOfStackStack.push(3);
+        setOfStackStack.push(4);
+        setOfStackStack.push(5);
+        setOfStackStack.push(6);
+        setOfStackStack.push(7);
+        setOfStackStack.push(8);
+        setOfStackStack.push(9);
+        setOfStackStack.push(10);
+
+        try {
+            System.out.println(setOfStackStack.popAt(2));
+            System.out.println(setOfStackStack.popAt(2));
+            System.out.println(setOfStackStack.popAt(2));
+            System.out.println(setOfStackStack.popAt(2));
+        } catch (EmptyStackException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(setOfStackStack);
     }
 
 
