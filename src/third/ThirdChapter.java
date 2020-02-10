@@ -92,6 +92,11 @@ public class ThirdChapter {
         System.out.println(stackQueue.peek());
         stackQueue.add(5);
         System.out.println(stackQueue.peek());
+        stackQueue.pop();
+        stackQueue.pop();
+        stackQueue.pop();
+        stackQueue.pop();
+        System.out.println(stackQueue.peek());
     }
 
 }
