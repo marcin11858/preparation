@@ -1,5 +1,7 @@
 package third;
 
+import java.util.Stack;
+
 public class ThirdChapter {
 
     public static void main(String[] args) {
@@ -7,7 +9,8 @@ public class ThirdChapter {
 //        question_3_2();
 //        question_3_2_1();
 //        question_3_3();
-        question_3_4();
+//        question_3_4();
+        question_3_5();
     }
 
     private static void question_3_1() {
@@ -97,6 +100,32 @@ public class ThirdChapter {
         stackQueue.pop();
         stackQueue.pop();
         System.out.println(stackQueue.peek());
+    }
+
+    private static void question_3_5() {
+        Stack<Integer> s = new Stack<>();
+        s.push(3);
+        s.push(1);
+        s.push(6);
+        s.push(2);
+        s.push(5);
+        s.push(0);
+        s.push(9);
+
+        Stack<Integer> r = new Stack<Integer>();
+        while (!s.isEmpty()) {
+            int tmp = s.pop();
+            while (!r.isEmpty() && r.peek() > tmp) {
+                s.push(r.pop());
+            }
+            r.push(tmp);
+        }
+
+        while (!r.isEmpty()) {
+            s.push(r.pop());
+        }
+
+        System.out.println(s);
     }
 
 }
