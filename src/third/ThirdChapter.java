@@ -10,7 +10,8 @@ public class ThirdChapter {
 //        question_3_2_1();
 //        question_3_3();
 //        question_3_4();
-        question_3_5();
+//        question_3_5();
+        question_3_6();
     }
 
     private static void question_3_1() {
@@ -126,6 +127,10 @@ public class ThirdChapter {
         }
 
         System.out.println(s);
+    }
+
+    private static void question_3_6() {
+
     }
 
 }
