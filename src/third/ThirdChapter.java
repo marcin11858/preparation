@@ -130,7 +130,12 @@ public class ThirdChapter {
     }
 
     private static void question_3_6() {
+        AnimalQueue queue = new AnimalQueue();
+        queue.enqueue(new Dog("First"));
+        queue.enqueue(new Cat("Second"));
+        queue.enqueue(new Dog("Third"));
 
+        System.out.println(queue.dequeueAny().name);
     }
 
 }
