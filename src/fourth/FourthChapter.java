@@ -5,7 +5,10 @@ import java.util.LinkedList;
 public class FourthChapter {
 
     public static void main(String[] args) {
-        question_4_1();
+//        question_4_1();
+        TreeNode node = question_4_2(new int[]{ 1,2,3,4,5,6,7,8,9,10 });
+        node.toString();
+        int c = 1 + 1;
     }
 
     private static void question_4_1() {
@@ -46,6 +49,22 @@ public class FourthChapter {
             u.state = State.VISITED;
         }
         System.out.println(false);
+    }
+
+    private static TreeNode question_4_2(int[] values) {
+        return createMinBSTRec(values, 0, values.length - 1);
+    }
+
+    private static TreeNode createMinBSTRec(int[] values, int startIndex, int endIndex) {
+        if (endIndex < startIndex) {
+            return null;
+        }
+
+        int middleIndex = (startIndex + endIndex) / 2;
+        TreeNode node = new TreeNode(values[middleIndex]);
+        node.setLeft(createMinBSTRec(values, startIndex, middleIndex - 1));
+        node.setRight(createMinBSTRec(values, middleIndex + 1, endIndex));
+        return node;
     }
 
     private static Graph createNewGraph()
